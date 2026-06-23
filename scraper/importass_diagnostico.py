@@ -38,28 +38,53 @@ async def volcar_texto(page, etiqueta: str, limite: int = 3000):
 
 
 async def volcar_iframes_detalle(page):
-    """Intenta volcar elementos interactivos dentro de cada iframe visible."""
-    for frame in page.frames:
+    """Vuelca texto y elementos de TODOS los frames (incluyendo ocultos y src=None)."""
+    frames = page.frames
+    print(f'\n=== Frames activos: {len(frames)} ===')
+    for i, frame in enumerate(frames):
         if frame == page.main_frame:
+            print(f'  Frame {i}: [main] {frame.url}')
             continue
+        print(f'\n  Frame {i}: {frame.url}')
+        # Texto visible
+        try:
+            texto = await frame.evaluate('() => document.body ? document.body.innerText.trim().substring(0, 800) : "(sin body)"')
+            if texto.strip():
+                print(f'    TEXTO: {texto[:800]}')
+        except Exception as e:
+            print(f'    (no se pudo leer texto: {e})')
+        # Todos los elementos interactivos, sin filtro de visibilidad
         try:
             elementos = await frame.evaluate('''
-                () => [...document.querySelectorAll('a, button, input, select, [role="button"]')]
-                    .filter(el => el.offsetParent !== null)
+                () => [...document.querySelectorAll('a, button, input, select, textarea, [role="button"]')]
                     .map(el => ({
                         tag: el.tagName,
                         id: el.id || null,
+                        name: el.getAttribute('name'),
                         type: el.type || null,
-                        text: (el.innerText || el.value || el.placeholder || '').trim().substring(0, 80),
+                        text: (el.innerText || el.value || el.placeholder || el.getAttribute('aria-label') || '').trim().substring(0, 80),
+                        visible: el.offsetParent !== null,
                     }))
-                    .filter(el => el.text.length > 0 || el.id)
+                    .filter(el => el.text.length > 0 || el.id || el.name)
             ''')
             if elementos:
-                print(f'\n  --- Elementos dentro del iframe {frame.url} ---')
+                print(f'    ELEMENTOS ({len(elementos)}):')
                 for el in elementos:
-                    print(f"    [{el['tag']}] id={el['id']} type={el['type']} -> {el['text']}")
+                    vis = '' if el['visible'] else ' [OCULTO]'
+                    print(f"      [{el['tag']}] id={el['id']} name={el['name']} type={el['type']}{vis} -> {el['text']}")
+            else:
+                print('    (sin elementos interactivos)')
         except Exception as e:
-            print(f'  (no se pudo leer el iframe {frame.url}: {e})')
+            print(f'    (no se pudo leer elementos: {e})')
+        # Iframes anidados
+        try:
+            nested = await frame.evaluate('''
+                () => [...document.querySelectorAll('iframe')].map(f => f.src || f.srcdoc || "(sin src)")
+            ''')
+            if nested:
+                print(f'    IFRAMES ANIDADOS: {nested}')
+        except Exception:
+            pass
 
 
 async def volcar_elementos(page, etiqueta: str):
@@ -193,14 +218,43 @@ async def main():
             boton_continuar = await page.query_selector('#btn-atria-continuar')
             if boton_continuar:
                 print('Pulsando #btn-atria-continuar...')
+                # Escuchar popup/nueva pestaña ANTES del clic
+                popup_capturado = []
+                context.on('page', lambda p: popup_capturado.append(p))
+
                 await boton_continuar.click()
-                await page.wait_for_timeout(3000)
+                await page.wait_for_timeout(10000)
             else:
                 print('No se encontro #btn-atria-continuar.')
+                popup_capturado = []
 
             print(f'URL tras continuar: {page.url}')
-            await volcar_texto(page, 'tras marcar "no" y continuar')
-            await volcar_elementos(page, 'tras marcar "no" y continuar')
+
+            # ¿Se abrió popup/nueva pestaña?
+            if popup_capturado:
+                nueva_pagina = popup_capturado[0]
+                await nueva_pagina.wait_for_load_state('networkidle', timeout=15000)
+                print(f'\n*** POPUP/NUEVA PESTAÑA detectada: {nueva_pagina.url} ***')
+                await volcar_texto(nueva_pagina, 'nueva pestaña')
+                await volcar_elementos(nueva_pagina, 'nueva pestaña')
+                await volcar_iframes_detalle(nueva_pagina)
+            else:
+                print('(sin popup/nueva pestaña)')
+
+            # Página principal tras continuar
+            await volcar_texto(page, 'pagina principal tras continuar')
+            await volcar_elementos(page, 'pagina principal tras continuar')
+
+            # Volcar srcdoc de los iframes del DOM (contenido inline)
+            print('\n=== Contenido srcdoc de iframes en el DOM ===')
+            iframes_dom = await page.query_selector_all('iframe')
+            for idx, ifr in enumerate(iframes_dom):
+                src = await ifr.get_attribute('src')
+                srcdoc = await ifr.get_attribute('srcdoc')
+                print(f'  iframe[{idx}] src={src}')
+                if srcdoc:
+                    print(f'    srcdoc (primeros 600): {srcdoc[:600]}')
+
             await volcar_iframes_detalle(page)
         else:
             print('\nNo se encontro el radio #atria-opcion-no en esta pantalla.')
