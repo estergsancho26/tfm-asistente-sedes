@@ -1,0 +1,232 @@
+{
+  "tramite": "Cita Sanitaria Atención Primaria — Comunidad de Madrid",
+  "url_inicio": "https://www.comunidad.madrid/salud/cita-sanitaria",
+  "total_pasos": 5,
+  "pasos_scrapeados": 1,
+  "pasos_inferidos": 4,
+  "nota": "Paso 1 scrapeado. Pasos 2-5 inferidos: el sistema requiere credenciales reales (tarjeta sanitaria) para continuar.",
+  "pasos": [
+    {
+      "url": "https://www.citaprevia.sanidadmadrid.org/Forms/Acceso.aspx",
+      "title": "Acceso a la cita sanitaria en Atención Primaria — Servicio Madrileño de Salud",
+      "step_num": 1,
+      "breadcrumb": ["Cita sanitaria en Atención Primaria", "Acceso al servicio"],
+      "seccion": "Identificación del paciente",
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Aviso menores de 16 años",
+          "help_text": "Si la cita es para un menor de 16 años, el DNI/NIE que debe introducir es el del adulto que se haga responsable de la cita. No es válido el número de Pasaporte.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Documentos necesarios para acceder",
+          "help_text": "Para citarse en Atención Primaria necesita tres datos: el código de su tarjeta sanitaria autonómica (número impreso en la tarjeta), su fecha de nacimiento y su DNI o NIE con letra. Sin estos tres datos no podrá acceder al sistema.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "input",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_txtTarjeta']",
+          "label": "Código de identificación personal autonómico",
+          "aria_label": null,
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_txtTarjeta",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$txtTarjeta",
+          "placeholder": null,
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": null,
+          "help_text": "Es el número impreso en su Tarjeta Sanitaria Individual de la Comunidad de Madrid (también llamada CIP o código de identificación personal). Normalmente empieza por las letras de la comunidad autónoma seguidas de dígitos. Ejemplo en Madrid: 2879XXXXXXXX. Puede encontrarlo en el anverso de la tarjeta sanitaria, resaltado en color."
+        },
+        {
+          "node_type": "input",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_txtDia']",
+          "label": "Fecha de nacimiento — día",
+          "aria_label": null,
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_txtDia",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$txtDia",
+          "placeholder": "día",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^(0?[1-9]|[12][0-9]|3[01])$",
+          "help_text": "Día de nacimiento en formato numérico (1-31). Introduzca solo el número del día, sin ceros a la izquierda."
+        },
+        {
+          "node_type": "input",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_txtMes']",
+          "label": "Fecha de nacimiento — mes",
+          "aria_label": null,
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_txtMes",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$txtMes",
+          "placeholder": "mes",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^(0?[1-9]|1[012])$",
+          "help_text": "Mes de nacimiento en formato numérico (1-12). Introduzca solo el número del mes."
+        },
+        {
+          "node_type": "input",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_txtAnyo']",
+          "label": "Fecha de nacimiento — año",
+          "aria_label": null,
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_txtAnyo",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$txtAnyo",
+          "placeholder": "año",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^[0-9]{4}$",
+          "help_text": "Año de nacimiento en formato de 4 dígitos. Ejemplo: 1958."
+        },
+        {
+          "node_type": "input",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_txtDocumento']",
+          "label": "DNI / NIE (con letra)",
+          "aria_label": null,
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_txtDocumento",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$txtDocumento",
+          "placeholder": null,
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^[0-9]{8}[A-Za-z]$|^[XYZxyz][0-9]{7}[A-Za-z]$",
+          "help_text": "Introduzca su DNI (8 dígitos seguidos de la letra, ejemplo: 12345678Z) o su NIE (letra X, Y o Z, seguida de 7 dígitos y una letra, ejemplo: X1234567L). No es válido el pasaporte. Si la cita es para un menor de 16 años, introduzca el DNI/NIE del adulto responsable."
+        },
+        {
+          "node_type": "button",
+          "xpath": "//input[@id='ctl00_cphPrincipal_ctrlAcceso_btnEntrar_btnBoton']",
+          "label": "Acceder",
+          "html_id": "ctl00_cphPrincipal_ctrlAcceso_btnEntrar_btnBoton",
+          "html_name": "ctl00$cphPrincipal$ctrlAcceso$btnEntrar$btnBoton",
+          "input_type": "submit",
+          "required": false,
+          "visible": true,
+          "help_text": "Pulse para validar sus datos y acceder al sistema de cita. Si los datos son incorrectos el sistema mostrará un mensaje de error."
+        }
+      ]
+    },
+    {
+      "url": "https://www.citaprevia.sanidadmadrid.org/Forms/Menu.aspx",
+      "title": "Menú principal — Cita sanitaria en Atención Primaria",
+      "step_num": 2,
+      "breadcrumb": ["Cita sanitaria en Atención Primaria", "Menú"],
+      "seccion": "Selección de gestión",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Menú de opciones tras el acceso",
+          "help_text": "Tras identificarse correctamente, puede elegir entre varias opciones: pedir una cita nueva, consultar citas pendientes, anular una cita o cambiarla de día u hora.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Pedir cita",
+          "help_text": "Permite solicitar una nueva cita con su médico de Medicina de Familia, Pediatría, Enfermería, Matrona, Odontología o Trabajo Social. El sistema le mostrará las fechas y horas disponibles.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Consultar / Anular / Cambiar cita",
+          "help_text": "Permite ver las citas que tiene pendientes, anularlas o cambiarlas a otra fecha u hora disponible, tanto para consulta presencial como telefónica.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.citaprevia.sanidadmadrid.org/Forms/PedirCita.aspx",
+      "title": "Pedir cita — Selección de especialidad y profesional",
+      "step_num": 3,
+      "breadcrumb": ["Cita sanitaria en Atención Primaria", "Menú", "Pedir cita"],
+      "seccion": "Selección de especialidad",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Especialidades disponibles en Atención Primaria",
+          "help_text": "Puede pedir cita para los siguientes profesionales de su centro de salud: Medicina de Familia, Pediatría (para menores), Enfermería, Matrona, Odontología o Trabajo Social. Seleccione el tipo de consulta que necesita.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "select",
+          "label": "Tipo de especialidad o profesional",
+          "required": true,
+          "visible": true,
+          "options": ["Medicina de Familia", "Pediatría", "Enfermería", "Matrona", "Odontología", "Trabajo Social"],
+          "help_text": "Seleccione la especialidad con la que desea la cita. Si no sabe a qué especialidad acudir, elija Medicina de Familia."
+        },
+        {
+          "node_type": "info",
+          "label": "Citas telefónicas",
+          "help_text": "También puede solicitar cita para consulta no presencial por vía telefónica. En ese caso el médico le llamará a su teléfono en el horario indicado.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.citaprevia.sanidadmadrid.org/Forms/AgendaCita.aspx",
+      "title": "Selección de fecha y hora",
+      "step_num": 4,
+      "breadcrumb": ["Cita sanitaria en Atención Primaria", "Menú", "Pedir cita", "Selección de fecha"],
+      "seccion": "Elección de horario",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Agenda de citas disponibles",
+          "help_text": "El sistema muestra las fechas y horas disponibles en la agenda del profesional seleccionado. Elija la que mejor se adapte a sus preferencias. Si no hay huecos disponibles en las próximas semanas, puede volver a intentarlo más tarde ya que la agenda se actualiza continuamente.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Seleccionar fecha y hora",
+          "help_text": "Haga clic en el hueco horario de su preferencia para reservarlo. Podrá imprimir o descargar un resguardo con los datos de la cita una vez confirmada.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.citaprevia.sanidadmadrid.org/Forms/ConfirmaCita.aspx",
+      "title": "Confirmación de la cita",
+      "step_num": 5,
+      "breadcrumb": ["Cita sanitaria en Atención Primaria", "Menú", "Pedir cita", "Confirmación"],
+      "seccion": "Resguardo de cita",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Cita confirmada",
+          "help_text": "La cita ha quedado registrada. Puede imprimir o descargar un resguardo con la fecha, hora, centro de salud y nombre del profesional. También puede guardar los datos en la agenda de su móvil si usa la aplicación 'Cita Sanitaria Madrid'.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Imprimir / descargar resguardo",
+          "help_text": "Descarga o imprime el justificante de la cita. Llévelo o tenga a mano el número de cita el día de la consulta.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Canales alternativos para gestionar la cita",
+          "help_text": "Además del portal web, puede gestionar su cita a través de: la aplicación móvil gratuita 'Cita Sanitaria Madrid' (disponible en Play Store, App Store y AppGallery), por teléfono llamando al número de su centro de salud (en el reverso de la tarjeta sanitaria), o en persona en el quiosco digital del propio centro.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

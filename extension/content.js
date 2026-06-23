@@ -2,10 +2,11 @@
  * Asistente Sedes Electrónicas — content script (Chrome MV3)
  *
  * Inyecta un botón flotante y un panel de chat en cualquier página.
- * Cuando el usuario envía una consulta:
- *   1. Detecta la URL activa y el campo del formulario con el foco.
- *   2. Envía POST a http://localhost:8000/consulta con {pregunta, url, campo}.
- *   3. Muestra la respuesta del asistente en el panel.
+ * Funcionalidades:
+ *   - Consulta al backend FastAPI local (POST /consulta)
+ *   - Detección automática del campo de formulario con foco
+ *   - Dictado por voz (SpeechRecognition, es-ES) — botón mic
+ *   - Lectura de respuestas en voz alta (SpeechSynthesis, es-ES) — toggle
  *
  * Toda la comunicación es loopback local; ningún dato sale del dispositivo.
  * Sección 5.6 del TFM — UNIR Máster en Inteligencia Artificial.
@@ -15,16 +16,29 @@ const BACKEND_URL = 'http://localhost:8000';
 const ID_PANEL    = 'ase-panel';
 const ID_BOTON    = 'ase-boton-flotante';
 
-// ── Estado global ────────────────────────────────────────────────────────────
-let campoActivo     = null;   // label semántica del campo con foco
-let panelAbierto    = false;
-let servidorActivo  = false;
+// Estado global
+let campoActivo    = null;
+let panelAbierto   = false;
+let servidorActivo = false;
+let vozActiva      = true;
+let escuchando     = false;
 
-// ── Crear DOM del panel ───────────────────────────────────────────────────────
+// SpeechRecognition
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition  = null;
+
+if (SpeechRec) {
+  recognition = new SpeechRec();
+  recognition.lang            = 'es-ES';
+  recognition.continuous      = false;
+  recognition.interimResults  = false;
+  recognition.maxAlternatives = 1;
+}
+
+// Crear DOM del panel
 function crearPanel() {
   if (document.getElementById(ID_PANEL)) return;
 
-  // Botón flotante
   const boton = document.createElement('button');
   boton.id = ID_BOTON;
   boton.title = 'Asistente de trámites';
@@ -32,19 +46,20 @@ function crearPanel() {
   boton.addEventListener('click', togglePanel);
   document.body.appendChild(boton);
 
-  // Panel
   const panel = document.createElement('div');
   panel.id = ID_PANEL;
   panel.classList.add('ase-oculto');
   panel.innerHTML = `
     <div id="ase-cabecera">
       <span>Asistente de trámites</span>
+      <button id="ase-voz-toggle" title="Activar/desactivar voz">🔊</button>
       <button id="ase-cerrar" title="Cerrar">✕</button>
     </div>
     <div id="ase-estado-servidor">Comprobando servidor…</div>
     <div id="ase-campo-activo"></div>
     <div id="ase-mensajes"></div>
     <form id="ase-formulario" autocomplete="off">
+      <button id="ase-mic" type="button" title="Hablar">🎤</button>
       <textarea id="ase-input" rows="1"
         placeholder="¿En qué puedo ayudarte?"
         maxlength="500"></textarea>
@@ -53,32 +68,19 @@ function crearPanel() {
   `;
   document.body.appendChild(panel);
 
-  // Eventos
-  document.getElementById('ase-cerrar')
-    .addEventListener('click', () => cerrarPanel());
-
-  document.getElementById('ase-formulario')
-    .addEventListener('submit', (e) => {
-      e.preventDefault();
-      enviarConsulta();
-    });
-
-  // Enter envía, Shift+Enter añade línea
-  document.getElementById('ase-input')
-    .addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        enviarConsulta();
-      }
-    });
+  document.getElementById('ase-cerrar').addEventListener('click', () => cerrarPanel());
+  document.getElementById('ase-voz-toggle').addEventListener('click', toggleVoz);
+  document.getElementById('ase-formulario').addEventListener('submit', (e) => { e.preventDefault(); enviarConsulta(); });
+  document.getElementById('ase-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviarConsulta(); }
+  });
+  document.getElementById('ase-mic').addEventListener('click', toggleDictado);
 
   comprobarServidor();
 }
 
-// ── Visibilidad del panel ────────────────────────────────────────────────────
-function togglePanel() {
-  panelAbierto ? cerrarPanel() : abrirPanel();
-}
+// Visibilidad
+function togglePanel() { panelAbierto ? cerrarPanel() : abrirPanel(); }
 
 function abrirPanel() {
   const panel = document.getElementById(ID_PANEL);
@@ -94,9 +96,11 @@ function cerrarPanel() {
   if (!panel) return;
   panel.classList.add('ase-oculto');
   panelAbierto = false;
+  detenerDictado();
+  window.speechSynthesis && window.speechSynthesis.cancel();
 }
 
-// ── Comprobar que el backend está activo ─────────────────────────────────────
+// Servidor
 async function comprobarServidor() {
   const el = document.getElementById('ase-estado-servidor');
   if (!el) return;
@@ -106,9 +110,7 @@ async function comprobarServidor() {
       servidorActivo = true;
       el.textContent = '● Servidor activo — ejecución 100% local';
       el.className = 'ase-ok';
-    } else {
-      throw new Error('status ' + res.status);
-    }
+    } else throw new Error('status ' + res.status);
   } catch {
     servidorActivo = false;
     el.textContent = '⚠ Servidor no disponible — inicia backend.py';
@@ -116,40 +118,25 @@ async function comprobarServidor() {
   }
 }
 
-// ── Detección del campo con foco ─────────────────────────────────────────────
+// Campo con foco
 document.addEventListener('focusin', (e) => {
   const el = e.target;
   if (!['INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName)) return;
-  // Ignorar los propios elementos del panel del asistente
   if (el.closest('#ase-panel') || el.id === 'ase-input') return;
 
-  // Intentar obtener la etiqueta semántica del campo
   let label = null;
-
-  // 1. aria-label
   label = label || el.getAttribute('aria-label');
-
-  // 2. <label for="id">
   if (!label && el.id) {
     const lbl = document.querySelector(`label[for="${el.id}"]`);
     if (lbl) label = lbl.innerText.trim();
   }
-
-  // 3. aria-labelledby
   if (!label) {
     const lblId = el.getAttribute('aria-labelledby');
-    if (lblId) {
-      const ref = document.getElementById(lblId);
-      if (ref) label = ref.innerText.trim();
-    }
+    if (lblId) { const ref = document.getElementById(lblId); if (ref) label = ref.innerText.trim(); }
   }
-
-  // 4. placeholder
   label = label || el.placeholder || el.name || el.id || null;
-
   campoActivo = label ? label.substring(0, 80) : null;
 
-  // Mostrar campo activo en el panel si está abierto
   const indicador = document.getElementById('ase-campo-activo');
   if (indicador) {
     if (campoActivo) {
@@ -162,18 +149,83 @@ document.addEventListener('focusin', (e) => {
 }, true);
 
 document.addEventListener('focusout', () => {
-  // Pequeño retraso para no perder el campo si el usuario hace clic en el panel
   setTimeout(() => {
     const activo = document.activeElement;
     if (!activo || !['INPUT', 'SELECT', 'TEXTAREA'].includes(activo.tagName)) {
       const indicador = document.getElementById('ase-campo-activo');
       if (indicador) indicador.classList.remove('ase-visible');
-      // Nota: mantenemos campoActivo en memoria para la siguiente consulta
     }
   }, 200);
 }, true);
 
-// ── Enviar consulta al backend ───────────────────────────────────────────────
+// TTS
+function toggleVoz() {
+  vozActiva = !vozActiva;
+  const btn = document.getElementById('ase-voz-toggle');
+  if (btn) btn.textContent = vozActiva ? '🔊' : '🔇';
+  if (!vozActiva) window.speechSynthesis && window.speechSynthesis.cancel();
+}
+
+function leerRespuesta(texto) {
+  if (!vozActiva || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(texto);
+  utt.lang  = 'es-ES';
+  utt.rate  = 0.95;
+  utt.pitch = 1.0;
+  const voces = window.speechSynthesis.getVoices();
+  const vozES = voces.find(v => v.lang.startsWith('es') && v.localService) ||
+                voces.find(v => v.lang.startsWith('es'));
+  if (vozES) utt.voice = vozES;
+  window.speechSynthesis.speak(utt);
+}
+
+// STT
+function toggleDictado() { escuchando ? detenerDictado() : iniciarDictado(); }
+
+function iniciarDictado() {
+  if (!recognition) {
+    agregarMensaje('Tu navegador no soporta reconocimiento de voz.', 'sistema');
+    return;
+  }
+  if (escuchando) return;
+  escuchando = true;
+  actualizarBotonMic(true);
+
+  recognition.onresult = (e) => {
+    const texto = e.results[0][0].transcript;
+    const input = document.getElementById('ase-input');
+    if (input) { input.value = texto; input.focus(); }
+  };
+
+  recognition.onerror = (e) => {
+    console.warn('[ASE] SpeechRecognition error:', e.error);
+    detenerDictado();
+    if (e.error === 'not-allowed') {
+      agregarMensaje('Permiso de micrófono denegado. Actívalo en la configuración del navegador.', 'sistema');
+    }
+  };
+
+  recognition.onend = () => detenerDictado();
+
+  try { recognition.start(); } catch (_) { detenerDictado(); }
+}
+
+function detenerDictado() {
+  escuchando = false;
+  actualizarBotonMic(false);
+  try { recognition && recognition.stop(); } catch (_) {}
+}
+
+function actualizarBotonMic(activo) {
+  const btn = document.getElementById('ase-mic');
+  if (!btn) return;
+  btn.textContent = activo ? '⏹' : '🎤';
+  btn.title       = activo ? 'Detener dictado' : 'Hablar';
+  btn.classList.toggle('ase-mic-activo', activo);
+}
+
+// Enviar consulta
 async function enviarConsulta() {
   const inputEl  = document.getElementById('ase-input');
   const enviarEl = document.getElementById('ase-enviar');
@@ -185,40 +237,29 @@ async function enviarConsulta() {
     return;
   }
 
-  // Mostrar mensaje del usuario
+  detenerDictado();
   agregarMensaje(pregunta, 'usuario');
   inputEl.value = '';
   enviarEl.disabled = true;
 
-  // Indicador de carga
   const idPensando = agregarMensaje('Pensando…', 'pensando');
 
   try {
     const res = await fetch(`${BACKEND_URL}/consulta`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        pregunta: pregunta,
-        url:      window.location.href,
-        campo:    campoActivo,
-      }),
+      body: JSON.stringify({ pregunta, url: window.location.href, campo: campoActivo }),
     });
 
     eliminarMensaje(idPensando);
-
-    if (!res.ok) {
-      throw new Error(`Error del servidor: ${res.status}`);
-    }
+    if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
 
     const data = await res.json();
     agregarMensaje(data.respuesta, 'asistente');
+    leerRespuesta(data.respuesta);
 
-    // Aviso si se detectó PII (sin mostrar qué dato era)
     if (data.pii_detected) {
-      agregarMensaje(
-        '🔒 He detectado datos personales en tu mensaje y los he eliminado antes de procesarlo.',
-        'sistema'
-      );
+      agregarMensaje('🔒 He detectado datos personales en tu mensaje y los he eliminado antes de procesarlo.', 'sistema');
     }
 
   } catch (err) {
@@ -230,14 +271,13 @@ async function enviarConsulta() {
   }
 }
 
-// ── Utilidades de mensajes ───────────────────────────────────────────────────
+// Mensajes
 let _msgCounter = 0;
 
 function agregarMensaje(texto, tipo) {
   const contenedor = document.getElementById('ase-mensajes');
   if (!contenedor) return null;
-
-  const id = `ase-msg-${++_msgCounter}`;
+  const id  = `ase-msg-${++_msgCounter}`;
   const div = document.createElement('div');
   div.id = id;
   div.className = `ase-msg ase-msg-${tipo}`;
@@ -253,7 +293,7 @@ function eliminarMensaje(id) {
   if (el) el.remove();
 }
 
-// ── Inicializar cuando el DOM esté listo ─────────────────────────────────────
+// Init
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', crearPanel);
 } else {

@@ -171,3 +171,48 @@
 }
 #ase-enviar:hover   { background: #1558b0; }
 #ase-enviar:disabled { background: #bdc1c6; cursor: default; }
+
+/* ── Botón micrófono ── */
+#ase-mic {
+  background: #f1f3f4;
+  color: #5f6368;
+  border: 1px solid #dadce0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+  align-self: flex-end;
+}
+#ase-mic:hover       { background: #e8f0fe; color: #1a73e8; }
+#ase-mic.ase-mic-activo {
+  background: #fce8e6;
+  color: #c5221f;
+  border-color: #c5221f;
+  animation: ase-pulso 1s infinite;
+}
+
+/* ── Toggle voz en cabecera ── */
+#ase-voz-toggle {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 6px 0 0;
+  line-height: 1;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+#ase-voz-toggle:hover { opacity: 1; }
+
+/* ── Animación pulso dictado ── */
+@keyframes ase-pulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(197,34,31,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(197,34,31,0); }
+}

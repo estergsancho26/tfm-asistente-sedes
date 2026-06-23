@@ -1,0 +1,275 @@
+{
+  "tramite": "Borrador / Declaración de la Renta IRPF — AEAT",
+  "url_inicio": "https://sede.agenciatributaria.gob.es/Sede/Renta.html",
+  "total_pasos": 5,
+  "pasos_scrapeados": 1,
+  "pasos_inferidos": 4,
+  "nota": "Paso 1 scrapeado (landing Renta 2025). Pasos 2-5 inferidos: requieren autenticación real. Campaña Renta 2025, inicio 8 abril 2026.",
+  "pasos": [
+    {
+      "url": "https://sede.agenciatributaria.gob.es/Sede/Renta.html",
+      "title": "Campaña de Renta 2025 — Sede Electrónica AEAT",
+      "step_num": 1,
+      "breadcrumb": ["Inicio", "IRPF", "Campaña de Renta 2025"],
+      "seccion": "Portal Renta 2025",
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Campaña de Renta 2025 — fechas",
+          "help_text": "La Campaña de Renta 2025 comenzó el 8 de abril de 2026. Puede presentar su declaración del IRPF del ejercicio 2025 a través de Renta WEB (con borrador o directamente). El plazo para presentar la declaración por Internet termina el 30 de junio de 2026.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Formas de identificación disponibles",
+          "help_text": "Para acceder a Renta WEB puede identificarse de tres formas: (1) Número de referencia: necesita su NIF, la fecha de validez del DNI y la casilla 505 de la última declaración presentada (o 0 si es la primera vez). (2) Cl@ve PIN o Cl@ve permanente: sistema de identificación con usuario y contraseña o PIN de un solo uso. (3) Certificado digital o DNI electrónico: si lo tiene instalado en su navegador.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Servicio tramitación de borrador / declaración (Renta DIRECTA y Renta WEB)",
+          "html_id": null,
+          "input_type": "link",
+          "required": false,
+          "visible": true,
+          "help_text": "Accede al selector de identificación para entrar en Renta WEB y tramitar el borrador o declaración del IRPF 2025."
+        },
+        {
+          "node_type": "button",
+          "label": "Obtén tu número de referencia",
+          "input_type": "link",
+          "required": false,
+          "visible": true,
+          "help_text": "Si no tiene Cl@ve ni certificado digital, puede obtener el número de referencia para acceder a Renta WEB. Necesita su NIF/NIE, la fecha de validez del DNI y el importe de la casilla 505 de su última declaración."
+        },
+        {
+          "node_type": "button",
+          "label": "Datos fiscales",
+          "input_type": "link",
+          "required": false,
+          "visible": true,
+          "help_text": "Consulte los datos fiscales que la AEAT tiene en su poder: rendimientos del trabajo, rendimientos del capital, imputaciones de renta, etc. Es recomendable revisarlos antes de presentar la declaración."
+        },
+        {
+          "node_type": "button",
+          "label": "Renta Web Open Simulador",
+          "input_type": "link",
+          "required": false,
+          "visible": true,
+          "help_text": "Simulador gratuito de Renta WEB que no requiere identificación. Permite calcular el resultado de la declaración sin presentarla. Útil para comprobar si le sale a pagar o a devolver antes de decidir si presenta la declaración."
+        },
+        {
+          "node_type": "info",
+          "label": "Información para mayores de 65 años",
+          "help_text": "Las personas mayores de 65 años pueden pedir cita para que un agente de la AEAT les confeccione la declaración de forma gratuita, tanto por teléfono (desde el 29 de abril) como en oficinas (desde el 29 de mayo). Llame al teléfono de la AEAT o solicite cita en la sede electrónica.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Cita para Campaña de Renta 2025",
+          "input_type": "link",
+          "required": false,
+          "visible": true,
+          "help_text": "Solicite cita previa para que un agente de la AEAT le ayude a confeccionar su declaración por teléfono o en una oficina. Disponible desde el 29 de abril para asistencia telefónica y desde el 29 de mayo para presencial."
+        },
+        {
+          "node_type": "info",
+          "label": "Rentas que no tributan en el IRPF",
+          "help_text": "Están exentas de IRPF, entre otras: las prestaciones por desempleo en pago único, las indemnizaciones por despido hasta el límite legal, las becas públicas, los premios de lotería hasta 40.000 euros, las pensiones de la Seguridad Social en ciertos casos, y las prestaciones por maternidad/paternidad.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Registrarse en Cl@ve",
+          "help_text": "Si no tiene Cl@ve, puede registrarse online en la AEAT. Necesita su DNI/NIE y un número de teléfono móvil. Una vez registrado puede usar Cl@ve PIN (código de un solo uso por SMS) o Cl@ve permanente (usuario y contraseña) para acceder a todos los servicios electrónicos de la administración.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://sede.agenciatributaria.gob.es/static_files/common/html/selector_acceso/SelectorAccesos.html",
+      "title": "Acceso al servicio — Identificación electrónica AEAT",
+      "step_num": 2,
+      "breadcrumb": ["Inicio", "IRPF", "Campaña de Renta 2025", "Acceso al servicio"],
+      "seccion": "Selección de método de identificación",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Métodos de acceso disponibles",
+          "help_text": "Para acceder a Renta WEB debe identificarse por uno de estos métodos: número de referencia (el más sencillo), Cl@ve PIN, Cl@ve permanente, certificado electrónico o DNI electrónico.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Acceder con número de referencia",
+          "help_text": "El número de referencia es la forma más sencilla de acceder si no tiene Cl@ve ni certificado digital. Necesita: su NIF o NIE, la fecha de validez del documento de identidad y el importe de la casilla 505 de su última declaración del IRPF (si nunca ha declarado, introduzca 0).",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Acceder con Cl@ve",
+          "help_text": "Acceda con Cl@ve PIN (código enviado al móvil) o Cl@ve permanente (usuario y contraseña). Si no está registrado, puede hacerlo en la propia AEAT o en cualquier oficina de la administración.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Acceder con certificado electrónico o DNI-e",
+          "help_text": "Use su certificado digital instalado en el navegador o su DNI electrónico (necesita un lector de tarjetas). Es el método más seguro pero requiere haber obtenido previamente el certificado en la FNMT u otro prestador de servicios.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://sede.agenciatributaria.gob.es/wlpl/DABJ-REN0/ObtenerReferenciaServlet",
+      "title": "Obtener número de referencia — AEAT Renta 2025",
+      "step_num": 3,
+      "breadcrumb": ["Inicio", "IRPF", "Campaña de Renta 2025", "Número de referencia"],
+      "seccion": "Identificación por número de referencia",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Qué es el número de referencia",
+          "help_text": "El número de referencia es un código de 6 caracteres que la AEAT genera para que pueda acceder a Renta WEB sin certificado digital ni Cl@ve. Se obtiene al rellenar tres datos de identificación. Es válido únicamente para la campaña actual.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "input",
+          "label": "NIF / NIE",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^[0-9]{8}[A-Za-z]$|^[XYZxyz][0-9]{7}[A-Za-z]$",
+          "help_text": "Introduzca su NIF (DNI con letra) o NIE. No es válido el pasaporte."
+        },
+        {
+          "node_type": "input",
+          "label": "Fecha de validez del DNI",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^[0-9]{2}/[0-9]{2}/[0-9]{4}$",
+          "help_text": "Fecha de caducidad o de validez del DNI en formato dd/mm/aaaa. Si el DNI tiene validez permanente, consulte la fecha de expedición. Para NIE: fecha de expedición del documento."
+        },
+        {
+          "node_type": "input",
+          "label": "Importe casilla 505 (última declaración IRPF)",
+          "required": true,
+          "visible": true,
+          "input_type": "text",
+          "validation_pattern": "^-?[0-9]+(,[0-9]{1,2})?$",
+          "help_text": "Importe de la casilla 505 'Base liquidable general sometida a gravamen' de su última declaración del IRPF presentada. Si nunca ha presentado una declaración, introduzca 0. El importe se expresa en euros con coma decimal (ejemplo: 18500,00). Si el año pasado no tuvo obligación de declarar, ponga 0."
+        },
+        {
+          "node_type": "button",
+          "label": "Obtener referencia",
+          "input_type": "submit",
+          "required": false,
+          "visible": true,
+          "help_text": "Pulse para obtener su número de referencia. Si los datos son correctos recibirá un código de 6 caracteres que deberá usar a continuación para acceder a Renta WEB."
+        }
+      ]
+    },
+    {
+      "url": "https://www2.agenciatributaria.gob.es/wlpl/PARE-RW25/index.zul",
+      "title": "Renta WEB — Borrador / Declaración IRPF 2025",
+      "step_num": 4,
+      "breadcrumb": ["Inicio", "IRPF", "Campaña de Renta 2025", "Renta WEB"],
+      "seccion": "Consulta y modificación del borrador",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Qué es Renta WEB",
+          "help_text": "Renta WEB es la aplicación online de la AEAT para presentar la declaración del IRPF. Muestra el borrador prerellenado con los datos fiscales que tiene la AEAT (salarios, pensiones, rendimientos bancarios, hipoteca, etc.). Debe revisar que todos los datos son correctos y añadir los que falten antes de confirmar.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Revisión del borrador",
+          "help_text": "Revise con cuidado todos los apartados del borrador: rendimientos del trabajo (nóminas, pensiones), rendimientos del capital inmobiliario (alquileres), rendimientos del capital mobiliario (intereses, dividendos), ganancias y pérdidas patrimoniales, deducciones autonómicas, etc. Un error o dato incompleto puede suponer una liquidación incorrecta.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Confirmar borrador sin modificaciones",
+          "help_text": "Si el borrador es correcto y no necesita cambios, puede confirmarlo directamente. Esto presenta la declaración tal como la ha generado la AEAT con sus datos fiscales.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Modificar borrador",
+          "help_text": "Permite editar cualquier dato del borrador: añadir rendimientos no incluidos, modificar deducciones, cambiar la opción de tributación (individual o conjunta), incluir datos del cónyuge, etc.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Tributación individual vs. conjunta",
+          "help_text": "Los matrimonios pueden elegir entre declaración individual (cada cónyuge presenta la suya) o conjunta (una sola declaración con los ingresos de ambos). La conjunta aplica una reducción de 3.400 euros en la base imponible. Conviene calcular ambas opciones para ver cuál es más favorable. Renta WEB permite simular las dos.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Resultado de la declaración: a devolver o a pagar",
+          "help_text": "Tras revisar el borrador, el sistema muestra el resultado: si es negativo (a devolver) la AEAT le ingresará el importe en su cuenta bancaria. Si es positivo (a pagar) puede domiciliar el pago, fraccionarlo en dos plazos (60% en junio y 40% en noviembre) o pagar mediante NRC bancario.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "url": "https://www2.agenciatributaria.gob.es/wlpl/PARE-RW25/confirm.zul",
+      "title": "Presentación de la declaración — Justificante IRPF 2025",
+      "step_num": 5,
+      "breadcrumb": ["Inicio", "IRPF", "Campaña de Renta 2025", "Renta WEB", "Confirmación"],
+      "seccion": "Presentación y justificante",
+      "inferido": true,
+      "nodes": [
+        {
+          "node_type": "info",
+          "label": "Confirmación y número de justificante",
+          "help_text": "Una vez presentada la declaración, el sistema genera un número de justificante (CSV) que acredita la presentación. Descargue o imprima el PDF del justificante como comprobante. La declaración queda registrada en los sistemas de la AEAT.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "button",
+          "label": "Descargar justificante PDF",
+          "help_text": "Descargue el justificante de presentación en PDF. Guárdelo: es el comprobante de que ha presentado la declaración en plazo.",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Cuenta bancaria para devolución o domiciliación",
+          "help_text": "Si el resultado es a devolver, la AEAT ingresará el importe en la cuenta bancaria (IBAN) que figure en sus datos fiscales o que haya indicado en la declaración. Si es a pagar y ha domiciliado el pago, el cargo se realizará el 30 de junio de 2026 (primer plazo) y el 5 de noviembre de 2026 (segundo plazo si ha fraccionado).",
+          "required": false,
+          "visible": true
+        },
+        {
+          "node_type": "info",
+          "label": "Plazos de devolución",
+          "help_text": "La AEAT tiene hasta 6 meses desde el fin del plazo de presentación (30 de junio de 2026) para realizar la devolución, es decir, hasta el 31 de diciembre de 2026. Las devoluciones suelen realizarse antes si la declaración es sencilla. Puede consultar el estado de su devolución en la sede electrónica.",
+          "required": false,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
