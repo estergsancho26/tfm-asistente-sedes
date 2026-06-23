@@ -342,7 +342,7 @@
           "visible": true,
           "input_type": null,
           "validation_pattern": null,
-          "help_text": "Paso no alcanzable con DNI sintetico"
+          "help_text": null
         }
       ]
     },
@@ -365,7 +365,7 @@
           "visible": true,
           "input_type": null,
           "validation_pattern": null,
-          "help_text": "Paso no alcanzable con DNI sintetico"
+          "help_text": null
         }
       ]
     },
@@ -388,7 +388,7 @@
           "visible": true,
           "input_type": null,
           "validation_pattern": null,
-          "help_text": "Paso no alcanzable con DNI sintetico"
+          "help_text": null
         }
       ]
     },
@@ -411,7 +411,7 @@
           "visible": true,
           "input_type": null,
           "validation_pattern": null,
-          "help_text": "Paso no alcanzable con DNI sintetico"
+          "help_text": null
         }
       ]
     }

@@ -1,0 +1,173 @@
+/* ── Asistente Sedes Electrónicas — estilos del panel de chat ── */
+
+#ase-boton-flotante {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 2147483647;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #1a73e8;
+  color: #fff;
+  font-size: 26px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+  font-family: sans-serif;
+}
+#ase-boton-flotante:hover {
+  background: #1558b0;
+  transform: scale(1.08);
+}
+
+#ase-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 28px;
+  z-index: 2147483646;
+  width: 360px;
+  max-height: 520px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+#ase-panel.ase-oculto {
+  display: none;
+}
+
+#ase-cabecera {
+  background: #1a73e8;
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+#ase-cabecera span { flex: 1; }
+#ase-cerrar {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+}
+
+#ase-estado-servidor {
+  font-size: 11px;
+  padding: 4px 16px;
+  background: #f1f3f4;
+  color: #5f6368;
+  flex-shrink: 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+#ase-estado-servidor.ase-ok   { color: #188038; }
+#ase-estado-servidor.ase-error { color: #c5221f; }
+
+#ase-mensajes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ase-msg {
+  max-width: 88%;
+  padding: 9px 13px;
+  border-radius: 12px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.ase-msg-usuario {
+  align-self: flex-end;
+  background: #e8f0fe;
+  color: #1a1a1a;
+  border-bottom-right-radius: 3px;
+}
+.ase-msg-asistente {
+  align-self: flex-start;
+  background: #f1f3f4;
+  color: #1a1a1a;
+  border-bottom-left-radius: 3px;
+}
+.ase-msg-sistema {
+  align-self: center;
+  background: #fce8e6;
+  color: #c5221f;
+  font-size: 12px;
+  text-align: center;
+  max-width: 100%;
+}
+.ase-msg-pensando {
+  align-self: flex-start;
+  background: #f1f3f4;
+  color: #80868b;
+  font-style: italic;
+  font-size: 13px;
+}
+
+#ase-campo-activo {
+  font-size: 11px;
+  padding: 4px 14px;
+  background: #e8f0fe;
+  color: #1558b0;
+  flex-shrink: 0;
+  display: none;
+}
+#ase-campo-activo.ase-visible { display: block; }
+
+#ase-formulario {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #e0e0e0;
+  flex-shrink: 0;
+  background: #fff;
+}
+#ase-input {
+  flex: 1;
+  border: 1px solid #dadce0;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  resize: none;
+  line-height: 1.4;
+}
+#ase-input:focus { border-color: #1a73e8; }
+#ase-enviar {
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  align-self: flex-end;
+}
+#ase-enviar:hover   { background: #1558b0; }
+#ase-enviar:disabled { background: #bdc1c6; cursor: default; }
