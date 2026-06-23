@@ -1,0 +1,524 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "tramite",
+      "titulo": "Cita Previa SEPE",
+      "url_inicio": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "total_pasos": 8,
+      "id": "tramite_0"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Cita Previa",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 1,
+      "step_total": 8,
+      "estado": "completada",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_1"
+    },
+    {
+      "type": "button",
+      "label": "Continuar",
+      "html_id": "btnContinuar1",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_1_button_0"
+    },
+    {
+      "type": "input",
+      "label": "Su Código Postal *",
+      "html_id": "datosCodigoPostal",
+      "input_type": "select",
+      "required": false,
+      "help_text": null,
+      "id": "pagina_1_input_1"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Cita Previa",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 2,
+      "step_total": 8,
+      "estado": "completada",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [
+        "La introducción del documento identificativo es obligatoria"
+      ],
+      "id": "pagina_2"
+    },
+    {
+      "type": "button",
+      "label": "Continuar",
+      "html_id": "btnContinuar1",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_2_button_0"
+    },
+    {
+      "type": "input",
+      "label": "Su Código Postal *",
+      "html_id": "datosCodigoPostal",
+      "input_type": "select",
+      "required": false,
+      "help_text": "Opciones: 28001, 28002, 28003, 28004, 28005, 28006, 28007, 28008, 28009, 28010, 28011, 28012, 28013, 28014, 28015, 28016, 28017, 28018, 28019, 28020, 28021, 28022, 28023, 28024, 28025, 28026, 28027, 28028, 28029, 28030, 28031, 28032, 28033, 28034, 28035, 28036, 28037, 28038, 28039, 28040, 28041, 28042, 28043, 28044, 28045, 28046, 28047, 28048, 28049, 28050, 28051, 28052, 28053, 28054, 28055, 28091",
+      "id": "pagina_2_input_1"
+    },
+    {
+      "type": "input",
+      "label": "idNivelServicio1|",
+      "html_id": "comboNivelServicio1",
+      "input_type": "select",
+      "required": false,
+      "help_text": "Opciones: PRESTACIONES",
+      "id": "pagina_2_input_2"
+    },
+    {
+      "type": "input",
+      "label": "idNivelServicio2|",
+      "html_id": "comboNivelServicio2",
+      "input_type": "select",
+      "required": false,
+      "help_text": "Opciones: He finalizado un trabajo: acceso o reanudación de prestación o subsidio, Soy una persona víctima de violencia de género y quiero atención personalizada, Otros accesos subsidio, Declaración anual de Rentas o prórroga, Cobros indebidos, sanciones, variaciones económicas o familiares y otras incidencias, Estoy cobrando prestación/subsidio y ha cambiado mi situación, Tránsito a IMV., Información general, entrega documentación, modificación datos bancarios",
+      "id": "pagina_2_input_3"
+    },
+    {
+      "type": "input",
+      "label": "Subtrámite(*)",
+      "html_id": "comboTiposServicios",
+      "input_type": "select",
+      "required": false,
+      "help_text": "Opciones: He finalizado un trabajo: acceso o reanudación prestación/subsidio",
+      "id": "pagina_2_input_4"
+    },
+    {
+      "type": "input",
+      "label": "NIF/NIE(*)",
+      "html_id": "inputDNI",
+      "input_type": "text",
+      "required": false,
+      "help_text": null,
+      "id": "pagina_2_input_5"
+    },
+    {
+      "type": "error",
+      "label": "La introducción del documento identificativo es obligatoria",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_2_error_6"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Cita Previa",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 3,
+      "step_total": 8,
+      "estado": "completada",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "es_bifurcacion": true,
+      "opciones": [
+        "SOLO SEPE",
+        "AMBOS"
+      ],
+      "id": "pagina_3"
+    },
+    {
+      "type": "button",
+      "label": "AMBOS",
+      "html_id": "btnAceptarContinuar11",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_3_button_0"
+    },
+    {
+      "type": "button",
+      "label": "SOLO SEPE",
+      "html_id": "btnContinuar11",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_3_button_1"
+    },
+    {
+      "type": "button",
+      "label": "Volver",
+      "html_id": "btnVolver11",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_3_button_2"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Cita Previa",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 4,
+      "step_total": 8,
+      "estado": "completada",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_4"
+    },
+    {
+      "type": "button",
+      "label": "+",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_4_button_0"
+    },
+    {
+      "type": "button",
+      "label": "−",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_4_button_1"
+    },
+    {
+      "type": "button",
+      "label": "i",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_4_button_2"
+    },
+    {
+      "type": "button",
+      "label": "Justificante",
+      "html_id": "btnJustificanteMapa",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_4_button_3"
+    },
+    {
+      "type": "button",
+      "label": "Volver",
+      "html_id": "btnVolverMapa",
+      "input_type": null,
+      "required": false,
+      "help_text": null,
+      "id": "pagina_4_button_4"
+    },
+    {
+      "type": "input",
+      "label": "Canal(*)",
+      "html_id": "comboCanales",
+      "input_type": "select",
+      "required": false,
+      "help_text": "Opciones: Presencial",
+      "id": "pagina_4_input_5"
+    },
+    {
+      "type": "help_text",
+      "label": "",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": "Pantalla de seleccion de canal y oficina con mapa",
+      "id": "pagina_4_help_text_6"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Validacion",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 5,
+      "step_total": 8,
+      "estado": "pendiente",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_5"
+    },
+    {
+      "type": "help_text",
+      "label": "Verificacion de datos antes de seleccionar fecha",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": "Paso no alcanzable con DNI sintetico",
+      "id": "pagina_5_help_text_0"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Dia y hora de la cita",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 6,
+      "step_total": 8,
+      "estado": "pendiente",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_6"
+    },
+    {
+      "type": "help_text",
+      "label": "Calendario para seleccionar fecha y hora disponible",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": "Paso no alcanzable con DNI sintetico",
+      "id": "pagina_6_help_text_0"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Datos personales",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 7,
+      "step_total": 8,
+      "estado": "pendiente",
+      "es_confirmacion": false,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_7"
+    },
+    {
+      "type": "help_text",
+      "label": "Nombre, apellidos, telefono y email de contacto",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": "Paso no alcanzable con DNI sintetico",
+      "id": "pagina_7_help_text_0"
+    },
+    {
+      "type": "pagina",
+      "titulo": "Cita previa",
+      "url": "https://citaprevia-sede.sepe.gob.es/citapreviasepe/?origen=sepe&codidioma=es",
+      "step_num": 8,
+      "step_total": 8,
+      "estado": "pendiente",
+      "es_confirmacion": true,
+      "breadcrumb": [],
+      "campos_requeridos": [],
+      "errores_activos": [],
+      "id": "pagina_8"
+    },
+    {
+      "type": "help_text",
+      "label": "Confirmacion y resguardo de la cita concertada",
+      "html_id": null,
+      "input_type": null,
+      "required": false,
+      "help_text": "Paso no alcanzable con DNI sintetico",
+      "id": "pagina_8_help_text_0"
+    }
+  ],
+  "links": [
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_1"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_2"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_3"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_4"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_5"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_6"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_7"
+    },
+    {
+      "type": "TIENE_PASO",
+      "source": "tramite_0",
+      "target": "pagina_8"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_1",
+      "target": "pagina_1_button_0"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_1",
+      "target": "pagina_1_input_1"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_1",
+      "target": "pagina_2"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_button_0"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_input_1"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_input_2"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_input_3"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_input_4"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_input_5"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_2",
+      "target": "pagina_2_error_6"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_2",
+      "target": "pagina_3"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_3",
+      "target": "pagina_3_button_0"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_3",
+      "target": "pagina_3_button_1"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_3",
+      "target": "pagina_3_button_2"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_3",
+      "target": "pagina_4"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_button_0"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_button_1"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_button_2"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_button_3"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_button_4"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_input_5"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_4",
+      "target": "pagina_4_help_text_6"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_4",
+      "target": "pagina_5"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_5",
+      "target": "pagina_5_help_text_0"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_5",
+      "target": "pagina_6"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_6",
+      "target": "pagina_6_help_text_0"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_6",
+      "target": "pagina_7"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_7",
+      "target": "pagina_7_help_text_0"
+    },
+    {
+      "type": "PRECEDE",
+      "source": "pagina_7",
+      "target": "pagina_8"
+    },
+    {
+      "type": "CONTIENE",
+      "source": "pagina_8",
+      "target": "pagina_8_help_text_0"
+    }
+  ]
+}
